@@ -29,7 +29,7 @@ export class LLMInferService {
       throw new NotFoundException(`Model ${model} not found`);
     }
 
-    const readyServerHost = this.getReadyServerHost(model);
+    const readyServerHost = await this.getReadyServerHost(model);
     const url = `http://${readyServerHost}:${config.llmInferServer.inferApiPort}/v1/completions`;
     const res = await axios.post(url, body, {
       responseType: 'stream',
@@ -43,7 +43,7 @@ export class LLMInferService {
       throw new NotFoundException(`Model ${model} not found`);
     }
 
-    const readyServerHost = this.getReadyServerHost(model);
+    const readyServerHost = await this.getReadyServerHost(model);
     const url = `http://${readyServerHost}:${config.llmInferServer.inferApiPort}/v1/chat/completions`;
     const res = await axios.post(url, body);
     return res.data;
