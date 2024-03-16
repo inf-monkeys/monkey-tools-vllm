@@ -20,13 +20,9 @@ export class LLMInferController {
     @Res() response: Response,
     @Body() body: CreateCompletionDto,
   ) {
+    Logger.log(body);
+
     const res = await this.llmInferService.getCompletions(body);
-    if (res.status !== 200) {
-      Logger.error(res.data);
-      response.status(res.status);
-      response.send(res.data);
-      return;
-    }
 
     response.setHeader('content-type', res.headers['content-type']);
     response.status(200);
@@ -44,6 +40,8 @@ export class LLMInferController {
     @Res() response: Response,
     @Body() body: CreateChatCompletionDto,
   ) {
+    Logger.log(body);
+
     const res = await this.llmInferService.getChatCompletions(body);
     if (res.status !== 200) {
       Logger.error(res.data);

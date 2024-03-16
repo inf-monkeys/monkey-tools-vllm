@@ -45,8 +45,10 @@ export class LLMInferService {
 
     const readyServerHost = await this.getReadyServerHost(model);
     const url = `http://${readyServerHost}:${config.llmInferServer.inferApiPort}/v1/chat/completions`;
-    const res = await axios.post(url, body);
-    return res.data;
+    const res = await axios.post(url, body, {
+      responseType: 'stream',
+    });
+    return res;
   }
 
   private async checkModelExist(model: string) {
