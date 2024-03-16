@@ -21,6 +21,16 @@ export class LLMInferController {
     @Body() body: CreateCompletionDto,
   ) {
     const res = await this.llmInferService.getCompletions(body);
+    if (res.status !== 200) {
+      response.status(res.status);
+      res.data.on('data', (chunk) => {
+        response.write(chunk);
+      });
+      res.data.on('end', () => {
+        response.end();
+      });
+      return;
+    }
 
     response.setHeader('content-type', res.headers['content-type']);
     response.status(200);
@@ -39,6 +49,16 @@ export class LLMInferController {
     @Body() body: CreateChatCompletionDto,
   ) {
     const res = await this.llmInferService.getChatCompletions(body);
+    if (res.status !== 200) {
+      response.status(res.status);
+      res.data.on('data', (chunk) => {
+        response.write(chunk);
+      });
+      res.data.on('end', () => {
+        response.end();
+      });
+      return;
+    }
 
     response.setHeader('content-type', res.headers['content-type']);
     response.status(200);
