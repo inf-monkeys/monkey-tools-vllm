@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { LLMInferService } from './llm_infer.service';
 import {
@@ -22,13 +22,9 @@ export class LLMInferController {
   ) {
     const res = await this.llmInferService.getCompletions(body);
     if (res.status !== 200) {
+      Logger.error(res.data);
       response.status(res.status);
-      res.data.on('data', (chunk) => {
-        response.write(chunk);
-      });
-      res.data.on('end', () => {
-        response.end();
-      });
+      response.send(res.data);
       return;
     }
 
@@ -50,13 +46,9 @@ export class LLMInferController {
   ) {
     const res = await this.llmInferService.getChatCompletions(body);
     if (res.status !== 200) {
+      Logger.error(res.data);
       response.status(res.status);
-      res.data.on('data', (chunk) => {
-        response.write(chunk);
-      });
-      res.data.on('end', () => {
-        response.end();
-      });
+      response.send(res.data);
       return;
     }
 
