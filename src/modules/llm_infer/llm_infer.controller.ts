@@ -43,12 +43,6 @@ export class LLMInferController {
     Logger.log(body);
 
     const res = await this.llmInferService.getChatCompletions(body);
-    if (res.status !== 200) {
-      Logger.error(res.data);
-      response.status(res.status);
-      response.send(res.data);
-      return;
-    }
 
     response.setHeader('content-type', res.headers['content-type']);
     response.status(200);
