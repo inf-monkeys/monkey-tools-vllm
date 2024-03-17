@@ -33,6 +33,9 @@ export class LLMInferController {
     res.data.on('end', () => {
       response.end();
     });
+    res.data.on('error', () => {
+      response.end();
+    });
   }
 
   @Post('/v1/chat/completions')
@@ -51,6 +54,9 @@ export class LLMInferController {
       response.write(chunk);
     });
     res.data.on('end', () => {
+      response.end();
+    });
+    res.data.on('error', () => {
       response.end();
     });
   }
