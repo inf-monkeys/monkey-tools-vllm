@@ -1,11 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiExcludeEndpoint } from '@nestjs/swagger';
-import { config } from './common/config';
 import {
   ApiType,
   AuthType,
-  CredentialAuthType,
-  MenifestJson,
+  ManifestJson,
   SchemaVersion,
 } from './common/interfaces';
 
@@ -15,10 +13,11 @@ export class AppController {
 
   @Get('/manifest.json')
   @ApiExcludeEndpoint()
-  public getManifestJson(): MenifestJson {
+  public getManifestJson(): ManifestJson {
     return {
       schema_version: SchemaVersion.v1,
-      namespace: 'monkeys_tools_vllm',
+      display_name: 'vllm',
+      namespace: 'monkey_tools_vllm',
       auth: {
         type: AuthType.none,
       },
@@ -27,37 +26,6 @@ export class AppController {
         url: `/openapi-json`,
       },
       contact_email: 'dev@inf-monkeys.com',
-      credentials: [
-        {
-          name: 'dysms',
-          type: CredentialAuthType.AKSK,
-          logo: 'https://static.aside.fun/upload/frame/a0QyJc.png',
-          displayName: '阿里云短信账号',
-          properties: [
-            {
-              displayName: 'accessKeyId',
-              name: 'accessKeyId',
-              type: 'string',
-              required: true,
-            },
-            {
-              displayName: 'accessKeySecret',
-              name: 'accessKeySecret',
-              type: 'string',
-              default: '',
-              required: true,
-            },
-            {
-              displayName: 'regionId',
-              name: 'regionId',
-              type: 'string',
-              default: 'cn-beijing',
-              required: true,
-            },
-          ],
-        },
-      ],
-      credentialEncryptKey: config.credentialEncrypt.publicKey,
     };
   }
 }

@@ -8,8 +8,8 @@ import { ExceptionsFilter } from './common/filters/exception.filter';
 
 export const setupSwagger = (app: INestApplication) => {
   const builder = new DocumentBuilder()
-    .setTitle('Simple Calc')
-    .setDescription('A simple calculation app')
+    .setTitle('VLLM Tools')
+    .setDescription('VLLM Tools')
     .setVersion('1.0')
     .addServer(
       `http://localhost:${config.server.port}`,

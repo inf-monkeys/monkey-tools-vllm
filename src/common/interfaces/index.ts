@@ -25,8 +25,9 @@ export interface CredentialDefinition {
   type: CredentialAuthType;
 }
 
-export interface MenifestJson {
+export interface ManifestJson {
   schema_version: SchemaVersion;
+  display_name: string;
   namespace: string;
   auth: {
     type: AuthType;
